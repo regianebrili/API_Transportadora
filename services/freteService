@@ -1,0 +1,32 @@
+const transportadoras = require('../transportadoras');
+
+function selecionarTransportadora(produto, transportadoras)
+{
+    if (produto.peso <= 0) {
+        return [];
+    }
+
+    let transportadorasSelecionadas = [];
+
+    for (let [transportadora, dadosTransportadora] of Object.entries(transportadoras)) {
+        if (
+            dadosTransportadora.altura_minima <= produto.dimensao.altura &&
+            produto.dimensao.altura <= dadosTransportadora.altura_maxima &&
+            dadosTransportadora.largura_minima <= produto.dimensao.largura &&
+            produto.dimensao.largura <= dadosTransportadora.largura_maxima
+        ) {
+            transportadorasSelecionadas.push(transportadora);
+        }
+    }
+
+    return transportadorasSelecionadas;
+}
+
+function calcularValorFrete(peso, constanteFrete) {
+    return (peso * constanteFrete) / 10;
+}
+
+module.exports = {
+    selecionarTransportadora,
+    calcularValorFrete    
+};
